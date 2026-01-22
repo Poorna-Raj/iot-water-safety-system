@@ -4,31 +4,42 @@ config:
 ---
 flowchart TB
  subgraph Water_Body["Man-Made Tank / Lake"]
-        N1["Sensor Node 1<br>(ESP32 / ESP8266)<br>pH<br>Turbidity<br>TDS / EC<br>Temperature"]
-        N2["Sensor Node 2<br>(ESP32 / ESP8266)<br>pH<br>Turbidity<br>TDS / EC<br>Temperature"]
-        N3["Sensor Node 3<br>(ESP32 / ESP8266)<br>pH<br>Turbidity<br>TDS / EC<br>Temperature"]
-        SAFETY["Safety Node<br>(ESP32 / ESP8266)<br>IR Human Detection<br>Buzzer / Warning LED"]
-        DISPLAY["On-Site Digital Display<br>LCD / LED Panel<br>Safe / Warning / Danger"]
+        N1["Sensor Node<br>(ESP32 / ESP8266)<br>
+        Temperature<br>
+        pH<br>
+        Turbidity<br>
+        Pressure (Depth)"]
+        SAFETY["Safety &amp; Monitoring Node<br>(ESP32 / ESP8266)<br>
+        Ultrasonic / IR Human Detection<br>
+        Local Decision Logic"]
+        DISPLAY["On-Site Physical Dashboard<br>
+        LCD / LED Panel<br>
+        Status Indicators<br>
+        Buzzer / Alarm"]
   end
  subgraph Network["Communication Layer"]
         WIFI["Wi-Fi / Mobile Hotspot"]
   end
- subgraph Backend["Backend Server"]
-        API["REST API<br>Data Ingestion"]
-        DB["Database<br>Time-Series Storage"]
-        LOGIC["Risk Classification Engine<br>Safe / Warning / Danger"]
+ subgraph Backend["Cloud / Backend Layer"]
+        API["Firebase / REST API<br>
+        Data Ingestion"]
+        DB["Database<br>
+        Real-Time &amp; Historical Data"]
+        LOGIC["Risk Classification Engine<br>
+        Safe / Caution / Unsafe"]
   end
- subgraph Application["Web Application"]
-        DASH["Web Dashboard"]
-        MAP["Heat Map Visualization"]
-        ALERT["Status Indicators"]
+ subgraph Application["Application Layer"]
+        DASH["Web / Mobile Dashboard"]
+        MAP["Risk-Based Visualization<br>
+        Heat Map"]
+        ALERT["Alert System<br>
+        Authorities / Admin Notification"]
   end
-    N1 --> Network
-    N2 --> Network
-    N3 --> Network
-    SAFETY --> Network & DISPLAY
-    WIFI --> Backend
+    SAFETY --> DISPLAY & Network
+    WIFI --> API
     API --> DB
     DB --> LOGIC
-    LOGIC --> DASH & DISPLAY
-    DASH --> MAP & ALERT
+    LOGIC --> DASH & ALERT
+    DASH --> MAP
+    N1 --> Network
+    LOGIC --> SAFETY
