@@ -1,0 +1,34 @@
+---
+config:
+  layout: elk
+---
+flowchart TB
+ subgraph Water_Body["Man-Made Tank / Lake"]
+        N1["Sensor Node 1<br>(ESP32 / ESP8266)<br>pH<br>Turbidity<br>TDS / EC<br>Temperature"]
+        N2["Sensor Node 2<br>(ESP32 / ESP8266)<br>pH<br>Turbidity<br>TDS / EC<br>Temperature"]
+        N3["Sensor Node 3<br>(ESP32 / ESP8266)<br>pH<br>Turbidity<br>TDS / EC<br>Temperature"]
+        SAFETY["Safety Node<br>(ESP32 / ESP8266)<br>IR Human Detection<br>Buzzer / Warning LED"]
+        DISPLAY["On-Site Digital Display<br>LCD / LED Panel<br>Safe / Warning / Danger"]
+  end
+ subgraph Network["Communication Layer"]
+        WIFI["Wi-Fi / Mobile Hotspot"]
+  end
+ subgraph Backend["Backend Server"]
+        API["REST API<br>Data Ingestion"]
+        DB["Database<br>Time-Series Storage"]
+        LOGIC["Risk Classification Engine<br>Safe / Warning / Danger"]
+  end
+ subgraph Application["Web Application"]
+        DASH["Web Dashboard"]
+        MAP["Heat Map Visualization"]
+        ALERT["Status Indicators"]
+  end
+    N1 --> Network
+    N2 --> Network
+    N3 --> Network
+    SAFETY --> Network & DISPLAY
+    WIFI --> Backend
+    API --> DB
+    DB --> LOGIC
+    LOGIC --> DASH & DISPLAY
+    DASH --> MAP & ALERT
