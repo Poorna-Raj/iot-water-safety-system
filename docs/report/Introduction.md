@@ -1,0 +1,2 @@
+Lakes and reservoirs are more popular spots for recreational activities than a pool such as swimming, diving and sunbathing. but many people engage with these activities without checking the safety of the water they are entering. example, such as a child want to take a swim but that day temperature was very high or some imbalance pH range, he might get a very serious injury and the traditional methods like sample checking are time consuming and ineffcient for immediate decision making.
+
