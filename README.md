@@ -105,6 +105,8 @@
 | createdAt      | integer | Epoch time alert was created                       |
 | clearedAt      | integer | Epoch time alert was acknowledged (null if active) |
 | currentStatus  | boolean | True → active warning, False → cleared             |
+| resolveToken   | string  | Generated token for authentication                 |
+| tokenExpiry    | string  | Expiration time for the generated token            |
 
 - Example JSON entry:
 
