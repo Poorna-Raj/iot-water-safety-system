@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@sendgrid/mail": "^8.1.6",
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "firebase-admin": "^13.6.1",
