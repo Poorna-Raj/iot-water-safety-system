@@ -1,21 +1,24 @@
+const crypto = require("crypto");
 const db = require("../firebase/firebase");
 const { checkWaterSafety } = require("../utils/processing");
+const { sendAlertEmail } = require("../utils/emailService");
 
 exports.saveSensorData = async (req, res) => {
   try {
     const data = req.body;
     const id = Date.now().toString();
+    const now = Date.now();
 
     await db.ref("raw-readings/" + id).set({
       ...data,
-      timestamp: Date.now(),
+      timestamp: now,
     });
 
     const processed = checkWaterSafety(data);
 
     await db.ref("processed-results/" + id).set({
       ...processed,
-      timestamp: Date.now(),
+      timestamp: now,
     });
 
     const alertsSnapshot = await db
@@ -31,14 +34,24 @@ exports.saveSensorData = async (req, res) => {
     if (!hasUnresolvedAlerts) {
       if (!processed.safe) {
         const alertId = Date.now().toString();
+        const token = crypto.randomBytes(32).toString("hex");
+
         await db.ref(`alerts/${alertId}`).set({
           readingId: id,
           type: "Water Unsafe",
           message: processed.message,
           acknowledgedBy: null,
-          createdAt: timestamp,
+          createdAt: now,
           clearedAt: null,
           currentStatus: true,
+          resolveToken: token,
+          tokenExpiry: now + 15 * 60 * 1000
+        });
+
+        await sendAlertEmail({
+          alertId,
+          token,
+          processed
         });
       }
       await db.ref("current-status").set({
