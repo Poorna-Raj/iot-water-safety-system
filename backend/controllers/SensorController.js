@@ -45,13 +45,13 @@ exports.saveSensorData = async (req, res) => {
           clearedAt: null,
           currentStatus: true,
           resolveToken: token,
-          tokenExpiry: now + 15 * 60 * 1000
+          tokenExpiry: now + 15 * 60 * 1000,
         });
 
         await sendAlertEmail({
           alertId,
           token,
-          processed
+          processed,
         });
       }
       await db.ref("current-status").set({
@@ -69,5 +69,70 @@ exports.saveSensorData = async (req, res) => {
   } catch (error) {
     console.error("Error saving sensor data:", error);
     return res.status(500).json({ error: "Failed to save sensor data" });
+  }
+};
+// GET /api/last-readings?sensor=turbidity&limit=10
+exports.getLastReadings = async (req, res) => {
+  try {
+    const { sensor, limit = 10 } = req.query;
+
+    if (!sensor) return res.status(400).json({ error: "Sensor type required" });
+
+    const snapshot = await db
+      .ref("raw-readings")
+      .orderByChild("timestamp")
+      .limitToLast(+limit);
+    const data = await snapshot.once("value");
+    const readings = data.val();
+
+    if (!readings) return res.json([]);
+
+    const sorted = Object.values(readings)
+      .map((r) => ({ timestamp: r.timestamp, value: r[sensor] }))
+      .sort((a, b) => a.timestamp - b.timestamp);
+
+    return res.json(sorted);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to fetch last readings" });
+  }
+};
+
+// GET /api/weekly-averages?sensor=turbidity
+exports.getWeeklyAverages = async (req, res) => {
+  try {
+    const { sensor } = req.query;
+    if (!sensor) return res.status(400).json({ error: "Sensor type required" });
+
+    const snapshot = await db.ref("raw-readings").once("value");
+    const readings = snapshot.val();
+    if (!readings) return res.json([]);
+
+    const now = Date.now();
+    const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
+    const dailySums = Array(7).fill(0);
+    const dailyCounts = Array(7).fill(0);
+
+    Object.values(readings).forEach(r => {
+      const diffDays = Math.floor((now - r.timestamp) / MS_PER_DAY);
+      if (diffDays >= 0 && diffDays < 7) {
+        const dayIndex = 6 - diffDays;
+        dailySums[dayIndex] += r[sensor] || 0;
+        dailyCounts[dayIndex] += 1;
+      }
+    });
+
+    const weeklyAverages = dailySums.map((sum, i) =>
+      dailyCounts[i] > 0 ? sum / dailyCounts[i] : null
+    );
+
+    return res.json({
+      sensor,
+      weeklyAverages,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to fetch weekly averages" });
   }
 };
