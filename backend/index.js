@@ -19,6 +19,6 @@ app.get("/", (req, res) => {
 app.use("/sensor", sensorRoutes);
 app.use("/alerts", alertRoutes);
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server Running on Port ${PORT}`);
 });
