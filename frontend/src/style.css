@@ -1,7 +1,7 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  background: #e8f7b2;
+  background: #f3f195;
 }
 
 .container {
@@ -9,18 +9,65 @@ body {
 }
 
 .status-card {
-  padding: 20px;
-  border-radius: 10px;
+  padding: 20px 25px;
+  border-radius: 12px;
   margin-bottom: 20px;
-  color: rgb(0, 0, 0);
+  color: #333333;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  cursor: default;
 }
 
+/* Hover effect for all cards */
+.status-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Titles and text */
+.status-card h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #111111;
+}
+
+.status-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #ffffff;
+}
+
+/* Safe status card */
 .status-safe {
-  background: #2ecc71;
+  background: linear-gradient(135deg, #27ae60, #2ecc71);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
 }
 
+/* Unsafe status card */
 .status-unsafe {
-  background: #e74c3c;
+  background: linear-gradient(135deg, #c0392b, #e74c3c);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+}
+
+/* Optional hover for colored cards */
+.status-safe:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(39, 174, 96, 0.5);
+}
+
+.status-unsafe:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(231, 76, 60, 0.5);
 }
 
 #map {

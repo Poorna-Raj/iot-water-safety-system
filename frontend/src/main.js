@@ -8,8 +8,8 @@ import Chart from "chart.js/auto";
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM Ready");
 
-  const LAT = 6.9271;
-  const LNG = 79.8612;
+  const LAT = 8.2499;   // 8°15' north approx
+  const LNG = 80.4828;  // 80°28' east approx
 
   initMap(LAT, LNG);
 
