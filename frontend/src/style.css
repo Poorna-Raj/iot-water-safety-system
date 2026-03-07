@@ -1,31 +1,221 @@
+/* ─── Base ─────────────────────────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  background: #f4f6f8;
+  background: #fffec6;
 }
 
+/* ─── Top Bar ───────────────────────────────────────────────────────────────── */
+.top-bar {
+  width: 100%;
+  padding: 8px 20px;
+  background: linear-gradient(90deg, #a9ee59, #9b8c07);
+  color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.top-bar h1 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* ─── Page Container ────────────────────────────────────────────────────────── */
 .container {
-  padding: 20px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
+/* ─── Status Card ───────────────────────────────────────────────────────────── */
 .status-card {
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  color: white;
+  padding: 20px 25px;
+  border-radius: 12px;
+  color: #333333;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  cursor: default;
+}
+
+.status-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.status-card h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.status-card p {
+  margin: 2px 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 .status-safe {
-  background: #2ecc71;
+  background: linear-gradient(135deg, #27ae60, #2ecc71);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
 }
 
 .status-unsafe {
-  background: #e74c3c;
+  background: linear-gradient(135deg, #c0392b, #e74c3c);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
 }
 
+.status-safe:hover {
+  box-shadow: 0 10px 25px rgba(39, 174, 96, 0.5);
+}
+
+.status-unsafe:hover {
+  box-shadow: 0 10px 25px rgba(231, 76, 60, 0.5);
+}
+
+/* ─── Middle Row: Map + Sensor Charts ──────────────────────────────────────── */
+.middle-row {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 16px;
+  align-items: stretch;
+  min-height: 0;
+}
+
+/* Map */
 #map {
-  height: 400px;
+  height: 420px;
   width: 100%;
-  margin-top: 20px;
-  border: 2px solid red; /* temporary debug */
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 2×2 sensor chart grid — fixed height matches map */
+.graph-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 12px;
+  height: 420px;
+}
+
+.graph-card {
+  background: #ffffff;
+  padding: 12px 12px 16px 12px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow: hidden;
+  min-height: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.graph-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+.graph-card h4 {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  flex-shrink: 0;
+}
+
+/* Wrapper makes Chart.js respect the card size */
+.chart-wrapper {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.chart-wrapper canvas {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ─── Weekly Chart (full width bottom) ─────────────────────────────────────── */
+.weekly-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  height: 380px;              /* fixed total card height */
+  display: flex;
+  flex-direction: column;
+}
+
+.weekly-card h4 {
+  margin: 0 0 12px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  flex-shrink: 0;
+}
+
+.weekly-chart-wrapper {
+  position: relative;
+  flex: 1;                    /* fill remaining card height */
+  min-height: 0;
+}
+
+.weekly-chart-wrapper canvas {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ─── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .middle-row {
+    grid-template-columns: 1fr;
+  }
+
+  #map {
+    height: 300px;
+  }
+
+  .graph-grid {
+    height: auto;
+    grid-template-rows: repeat(2, 200px);
+  }
+}
+
+@media (max-width: 560px) {
+  .graph-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 200px);
+  }
 }

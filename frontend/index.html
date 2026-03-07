@@ -2,19 +2,65 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Water Monitoring Dashboard</title>
+    <link rel="stylesheet" href="/src/style.css" />
   </head>
-  <body>
-    <div class="container">
-      <h1>Water Quality Dashboard</h1>
 
+  <body>
+
+    <!-- TOP STATUS BAR -->
+    <header class="top-bar">
+      <h1>Water Quality Dashboard</h1>
+    </header>
+
+    <div class="container">
+
+      <!-- STATUS CARD (full width) -->
       <div class="status-card" id="statusCard">
         <h2 id="statusText">Loading...</h2>
         <p>Quality Score: <span id="qualityScore">-</span></p>
         <p>Last Updated: <span id="lastUpdated">-</span></p>
       </div>
 
-      <div id="map"></div>
+      <!-- MIDDLE ROW: Map (left) + 4 Sensor Charts (right) -->
+      <div class="middle-row">
+
+        <!-- MAP -->
+        <div id="map"></div>
+
+        <!-- 2×2 SENSOR CHART GRID -->
+        <div class="graph-grid">
+
+          <div class="graph-card">
+            <h4>Temperature Fluctuation</h4>
+            <canvas id="chart-temperature"></canvas>
+          </div>
+
+          <div class="graph-card">
+            <h4>Turbidity Fluctuation</h4>
+            <canvas id="chart-turbidity"></canvas>
+          </div>
+
+          <div class="graph-card">
+            <h4>Conductivity Fluctuation</h4>
+            <canvas id="chart-conductivity"></canvas>
+          </div>
+
+          <div class="graph-card">
+            <h4>Ambient Light Fluctuation</h4>
+            <canvas id="chart-ambientLight"></canvas>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- WEEKLY AVERAGE CHART (full width bottom) -->
+      <div class="weekly-card">
+        <h4>Weekly Average Chart</h4>
+        <canvas id="chart-weekly"></canvas>
+      </div>
+
     </div>
 
     <script type="module" src="/src/main.js"></script>
