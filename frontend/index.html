@@ -4,98 +4,63 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Water Monitoring Dashboard</title>
-
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        background-color: #f4f6f9;
-      }
-
-      .container {
-        width: 90%;
-        margin: auto;
-        padding: 20px;
-      }
-
-      h1 {
-        text-align: center;
-      }
-
-      /* STATUS CARD */
-      .status-card {
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-        text-align: center;
-      }
-
-      /* MAP */
-      #map {
-        height: 400px;
-        border-radius: 10px;
-        margin-bottom: 30px;
-      }
-
-      /* GRAPH SECTION */
-      .graph-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-      }
-
-      .graph-card {
-        background: white;
-        padding: 15px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      }
-
-      canvas {
-        width: 100% !important;
-        height: 300px !important;
-      }
-    </style>
+    <link rel="stylesheet" href="/src/style.css" />
   </head>
 
   <body>
-    <div class="container">
-      <h1>Water Quality Dashboard</h1>
 
-      <!-- STATUS CARD -->
+    <!-- TOP STATUS BAR -->
+    <header class="top-bar">
+      <h1>Water Quality Dashboard</h1>
+    </header>
+
+    <div class="container">
+
+      <!-- STATUS CARD (full width) -->
       <div class="status-card" id="statusCard">
         <h2 id="statusText">Loading...</h2>
         <p>Quality Score: <span id="qualityScore">-</span></p>
         <p>Last Updated: <span id="lastUpdated">-</span></p>
       </div>
 
-      <!-- MAP -->
-      <div id="map"></div>
+      <!-- MIDDLE ROW: Map (left) + 4 Sensor Charts (right) -->
+      <div class="middle-row">
 
-      <!-- GRAPHS -->
-      <div class="graph-grid">
-        <div class="graph-card">
-          <h3>Temperature</h3>
-          <canvas id="tempChart"></canvas>
-        </div>
+        <!-- MAP -->
+        <div id="map"></div>
 
-        <div class="graph-card">
-          <h3>Turbidity</h3>
-          <canvas id="turbChart"></canvas>
-        </div>
+        <!-- 2×2 SENSOR CHART GRID -->
+        <div class="graph-grid">
 
-        <div class="graph-card">
-          <h3>Conductivity</h3>
-          <canvas id="condChart"></canvas>
-        </div>
+          <div class="graph-card">
+            <h4>Temperature Fluctuation</h4>
+            <canvas id="chart-temperature"></canvas>
+          </div>
 
-        <div class="graph-card">
-          <h3>Ambient Light</h3>
-          <canvas id="lightChart"></canvas>
+          <div class="graph-card">
+            <h4>Turbidity Fluctuation</h4>
+            <canvas id="chart-turbidity"></canvas>
+          </div>
+
+          <div class="graph-card">
+            <h4>Conductivity Fluctuation</h4>
+            <canvas id="chart-conductivity"></canvas>
+          </div>
+
+          <div class="graph-card">
+            <h4>Ambient Light Fluctuation</h4>
+            <canvas id="chart-ambientLight"></canvas>
+          </div>
+
         </div>
       </div>
+
+      <!-- WEEKLY AVERAGE CHART (full width bottom) -->
+      <div class="weekly-card">
+        <h4>Weekly Average Chart</h4>
+        <canvas id="chart-weekly"></canvas>
+      </div>
+
     </div>
 
     <script type="module" src="/src/main.js"></script>
