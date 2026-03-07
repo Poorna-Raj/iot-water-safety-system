@@ -4,17 +4,31 @@ const { checkWaterSafety } = require("../utils/processing");
 const { sendAlertEmail } = require("../utils/emailService");
 
 exports.saveSensorData = async (req, res) => {
+  console.log("Data Received");
   try {
     const data = req.body;
     const id = Date.now().toString();
     const now = Date.now();
+
+    const lastSnapshot = await db
+      .ref("raw-readings")
+      .orderByChild("timestamp")
+      .limitToLast(1)
+      .once("value");
+
+    let lastReading = null;
+
+    if (lastSnapshot.exists()) {
+      const values = Object.values(lastSnapshot.val());
+      lastReading = values[0];
+    }
 
     await db.ref("raw-readings/" + id).set({
       ...data,
       timestamp: now,
     });
 
-    const processed = checkWaterSafety(data);
+    const processed = checkWaterSafety(data, lastReading);
 
     await db.ref("processed-results/" + id).set({
       ...processed,
@@ -114,7 +128,7 @@ exports.getWeeklyAverages = async (req, res) => {
     const dailySums = Array(7).fill(0);
     const dailyCounts = Array(7).fill(0);
 
-    Object.values(readings).forEach(r => {
+    Object.values(readings).forEach((r) => {
       const diffDays = Math.floor((now - r.timestamp) / MS_PER_DAY);
       if (diffDays >= 0 && diffDays < 7) {
         const dayIndex = 6 - diffDays;
@@ -124,7 +138,7 @@ exports.getWeeklyAverages = async (req, res) => {
     });
 
     const weeklyAverages = dailySums.map((sum, i) =>
-      dailyCounts[i] > 0 ? sum / dailyCounts[i] : null
+      dailyCounts[i] > 0 ? sum / dailyCounts[i] : null,
     );
 
     return res.json({
