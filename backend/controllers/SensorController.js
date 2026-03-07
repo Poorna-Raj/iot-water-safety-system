@@ -10,12 +10,25 @@ exports.saveSensorData = async (req, res) => {
     const id = Date.now().toString();
     const now = Date.now();
 
+    const lastSnapshot = await db
+      .ref("raw-readings")
+      .orderByChild("timestamp")
+      .limitToLast(1)
+      .once("value");
+
+    let lastReading = null;
+
+    if (lastSnapshot.exists()) {
+      const values = Object.values(lastSnapshot.val());
+      lastReading = values[0];
+    }
+
     await db.ref("raw-readings/" + id).set({
       ...data,
       timestamp: now,
     });
 
-    const processed = checkWaterSafety(data);
+    const processed = checkWaterSafety(data, lastReading);
 
     await db.ref("processed-results/" + id).set({
       ...processed,
