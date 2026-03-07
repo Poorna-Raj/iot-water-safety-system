@@ -12,7 +12,6 @@
 | readingId (key) | string  | Unique ID (e.g., timestamp)          |
 | temperature     | float   | Temperature value from sensor        |
 | turbidity       | float   | Turbidity value from sensor          |
-| conductivity    | float   | Water conductivity value             |
 | ambientLight    | float   | Ambient light value                  |
 | timestamp       | integer | Epoch time when reading was recorded |
 
@@ -31,6 +30,7 @@
   }
 }
 ```
+
 ---
 
 ### 2. Processed Results
@@ -60,6 +60,7 @@
   }
 }
 ```
+
 ---
 
 ### 3. Current Status
@@ -88,6 +89,7 @@
   }
 }
 ```
+
 ---
 
 ### 4. Alerts
