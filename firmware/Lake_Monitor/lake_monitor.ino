@@ -12,11 +12,8 @@ const char *serverName =
     "http://10.92.122.70:5000/sensor/sensor-data"; // Replace with your actual
                                                    // endpoint
 
-// --- Pin Definitions ---
-#define TDS_PIN 34
-#define TURBIDITY_PIN 35
-#define PIR_PIN 13 // PIR Motion Sensor
-#define IR_DIGITAL_PIN 14 // IR Obstacle Sensor (DO)
+
+#define TURBIDITY_PIN 34
 #define ONE_WIRE_BUS 4 // DS18B20 Temp Sensor
 
 // --- Sensor Objects ---
@@ -39,9 +36,6 @@ void setup() {
   } else {
     Serial.println("Error initializing BH1750");
   }
-
-  pinMode(PIR_PIN, INPUT);
-  pinMode(IR_DIGITAL_PIN, INPUT);
 
   // WiFi Connection
   WiFi.begin(ssid, password);
@@ -76,17 +70,19 @@ void loop() {
 
       float lux = lightMeter.readLightLevel();
 
-      float turbidityVoltage = getAverageAnalog(TURBIDITY_PIN) * (3.3 / 4095.0);
-
-      // readingId (string)
-      String readingId = String(timestamp);
+      float totalRaw = 0;
+      for (int i = 0; i < 20; i++) {
+        totalRaw += analogRead(TURBIDITY_PIN);
+        delay(10);
+      }
+      float avgRaw = totalRaw / 20.0;
+      float actualSensorVoltage = (avgRaw * (3.3 / 4095.0)) * 1.5;
 
       // JSON payload
       String httpRequestData = "{";
-      httpRequestData += "\"readingId\":\"" + readingId + "\",";
       httpRequestData += "\"temperature\":" + String(temperature) + ",";
-      httpRequestData += "\"turbidity\":" + String(turbidityVoltage) + ",";
-      httpRequestData += "\"ambientLight\":" + String(lux) + ",";
+      httpRequestData += "\"turbidity\":" + String(actualSensorVoltage) + ",";
+      httpRequestData += "\"ambientLight\":" + String(lux);
       httpRequestData += "}";
 
       http.begin(client, serverName);
