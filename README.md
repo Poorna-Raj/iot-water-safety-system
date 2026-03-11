@@ -1,5 +1,42 @@
 # Iot Water Safety Monitoring System
 
+![GitHub repo size](https://img.shields.io/github/repo-size/Poorna-Raj/iot-water-safety-system)
+![GitHub stars](https://img.shields.io/github/stars/Poorna-Raj/iot-water-safety-system)
+![Pull Requests](https://img.shields.io/github/issues-pr/Poorna-Raj/iot-water-safety-system)
+![Closed Pull Requests](https://img.shields.io/github/issues-pr-closed/Poorna-Raj/iot-water-safety-system)
+![GitHub issues](https://img.shields.io/github/issues/Poorna-Raj/iot-water-safety-system)
+
+![Node.js](https://img.shields.io/badge/Backend-Node.js-339933?logo=node.js&logoColor=white)
+![Firebase](https://img.shields.io/badge/Database-Firebase-FFCA28?logo=firebase&logoColor=black)
+![ESP32](https://img.shields.io/badge/Microcontroller-ESP32-E7352C)
+![ESP8266](https://img.shields.io/badge/Microcontroller-ESP8266-grey)
+![Arduino](https://img.shields.io/badge/Firmware-Arduino-00979D?logo=arduino&logoColor=white)
+![JavaScript](https://img.shields.io/badge/Frontend-JavaScript-F7DF1E?logo=javascript&logoColor=black)
+
+An IoT-based lake water safety monitoring system that continuously measures environmental parameters and provides real-time safety alerts, visual analytics, and on-site warnings.
+
+The system integrates sensor nodes, cloud processing, alert mechanisms, and a web dashboard to monitor water conditions and notify users when unsafe conditions are detected.
+
+## Overview
+
+Water bodies used for recreation often lack real-time monitoring systems. Traditional laboratory testing methods are slow and cannot provide immediate safety insights.
+
+- This project introduces a low-cost IoT architecture capable of:
+- Collecting water quality data in real time
+- Processing environmental readings
+- Detecting unsafe conditions
+- Sending alerts to authorities
+- Providing visual insights through a dashboard
+- Triggering local warnings for nearby individuals
+
+IoT-based monitoring systems enable continuous environmental sensing and remote data analysis, making them effective for real-time water safety assessment.
+
+## System Architecture
+
+The system is divided into four main components:
+
+![System Architecture](docs/logic/sys-arch.png)
+
 ## Firebase Database Schema
 
 ### 1. Raw Readings
@@ -127,3 +164,11 @@
   }
 }
 ```
+
+## Future Improvements
+
+- Additional sensors (pH, dissolved oxygen)
+- Solar-powered sensor nodes
+- Machine learning based risk prediction
+- Mobile application integration
+- GPS-based location heat mapping
