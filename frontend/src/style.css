@@ -25,6 +25,7 @@ body {
 .logo{
   height:40px;
 }
+
 /* ─── Page Container ────────────────────────────────────────────────────────── */
 .container {
   padding: 16px;
@@ -103,9 +104,10 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* ─── Graph Grid (1 card only) ──────────────────────────────────────────────── */
 .graph-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: 12px;
   height: 420px;
 }
@@ -121,6 +123,7 @@ body {
   gap: 6px;
   overflow: hidden;
   min-height: 0;
+  max-height: 420px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -138,11 +141,11 @@ body {
   flex-shrink: 0;
 }
 
-/* Wrapper makes Chart.js respect the card size */
 .chart-wrapper {
   position: relative;
   flex: 1;
   min-height: 0;
+  overflow: hidden;
 }
 
 .chart-wrapper canvas {
@@ -160,7 +163,7 @@ body {
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border: 1px solid #e0e0e0;
-  height: 380px;              /* fixed total card height */
+  height: 380px;
   display: flex;
   flex-direction: column;
 }
@@ -176,7 +179,7 @@ body {
 
 .weekly-chart-wrapper {
   position: relative;
-  flex: 1;                    /* fill remaining card height */
+  flex: 1;
   min-height: 0;
 }
 
@@ -199,14 +202,13 @@ body {
   }
 
   .graph-grid {
-    height: auto;
-    grid-template-rows: repeat(2, 200px);
+    height: 200px;
   }
 }
 
 @media (max-width: 560px) {
   .graph-grid {
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(4, 200px);
+    height: 200px;
   }
 }
