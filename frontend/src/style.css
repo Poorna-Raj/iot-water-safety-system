@@ -13,14 +13,13 @@ body {
 .top-bar {
   width: 100%;
   padding: 8px 20px;
-  background: linear-gradient(90deg, #a9ee59, #9b8c07);
+  background: linear-gradient(90deg, #000000, #9b8c07);
   color: #ffffff;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 0.9rem;
   font-weight: 500;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+
   position: sticky;
   top: 0;
   z-index: 1000;
