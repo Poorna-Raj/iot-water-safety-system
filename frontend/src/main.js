@@ -9,7 +9,7 @@ import Chart from "chart.js/auto";
 const SENSORS = [
   { key: "temperature",  label: "Temperature (°C)", borderColor: "rgb(239,68,68)",  backgroundColor: "rgba(239,68,68,0.1)" },
   { key: "turbidity",    label: "Turbidity (NTU)",  borderColor: "rgb(59,130,246)", backgroundColor: "rgba(59,130,246,0.1)" },
-  { key: "conductivity", label: "Conductivity (µS/cm)", borderColor: "rgb(34,197,94)",  backgroundColor: "rgba(34,197,94,0.1)" },
+ 
   { key: "ambientLight", label: "Ambient Light (lux)", borderColor: "rgb(245,158,11)", backgroundColor: "rgba(245,158,11,0.1)" },
 ];
 

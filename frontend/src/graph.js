@@ -28,7 +28,7 @@ ChartJS.register(
 const SENSORS = [
   { key: "temperature",  label: "Temperature",  unit: "°C",    borderColor: "rgb(239,68,68)",   backgroundColor: "rgba(239,68,68,0.1)" },
   { key: "turbidity",    label: "Turbidity",    unit: "NTU",   borderColor: "rgb(59,130,246)",  backgroundColor: "rgba(59,130,246,0.1)" },
-  { key: "conductivity", label: "Conductivity", unit: "µS/cm", borderColor: "rgb(34,197,94)",   backgroundColor: "rgba(34,197,94,0.1)" },
+ 
   { key: "ambientLight", label: "Ambient Light",unit: "lux",   borderColor: "rgb(245,158,11)",  backgroundColor: "rgba(245,158,11,0.1)" },
 ];
 
@@ -171,7 +171,7 @@ export default function SensorGraphs() {
   // Option A: pull from a dedicated Firebase node "weekly-averages"
   //   Structure expected:
   //   weekly-averages/
-  //     0: { temperature, turbidity, conductivity, ambientLight }  ← Monday
+  //     0: { temperature, turbidity, , ambientLight }  ← Monday
   //     1: { ... }                                                  ← Tuesday
   //     ...
   //     6: { ... }                                                  ← Sunday
